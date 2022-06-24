@@ -30,11 +30,13 @@ public class Game {
 
 
     public void mainGameLoop(){
+        Player p = new Player(false);
         while (true){
             long start = System.currentTimeMillis();
 
             StdDraw.clear();
-
+            p.draw();
+            p.update();
             long end = System.currentTimeMillis();
 
             // frame timing checks
