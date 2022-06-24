@@ -10,13 +10,14 @@ public class Player{
    private double y;
    private final double halfWidth;
    private final double halfHeight;
-   private final double increment;
 
-   private double forward_momentum;
-   private double backward_momentum;
-   private double left_momentum;
-   private double right_momentum;
-   private double speedFactor;
+
+   private final double speedFactor;
+   private double fspeed;
+   private double bspeed;
+   private double rspeed;
+   private double lspeed;
+
 
 
    private int health;
@@ -36,7 +37,6 @@ public class Player{
        halfWidth = 5.0;
        halfHeight = halfWidth * 1.875;
        isPlayerOne = playerOne;
-       increment = 0.5;
        speedFactor = 0.0125;
 
        if (isPlayerOne){
@@ -68,82 +68,45 @@ public class Player{
 
    public void update(){
 
-      // updates car position based on keyboard inputs
-      // keeps track of momentum so car movement is more realistic
+      // driving mechanics
 
-
-      if (StdDraw.isKeyPressed(UP)){
-         y += increment;
-         forward_momentum += speedFactor;
+      if (StdDraw.isKeyPressed(UP)) {
+         fspeed += speedFactor;
+         bspeed -= speedFactor * 2.25;
       }else{
-         forward_momentum -= speedFactor;
-         if (forward_momentum < 0){
-            forward_momentum = 0;
-         }
+         fspeed -= speedFactor * 1.25;
+         if (fspeed < 0){fspeed = 0;}
       }
 
 
-      if (StdDraw.isKeyPressed(DOWN)){
-         y -= increment;
-         backward_momentum += speedFactor;
-
+      if (StdDraw.isKeyPressed(DOWN)) {
+         bspeed += speedFactor;
+         fspeed -= speedFactor * 2.25;
       }else {
-         backward_momentum -= speedFactor;
-         if (backward_momentum < 0){
-            backward_momentum = 0;
-         }
+         bspeed -= speedFactor * 1.25;
+         if (bspeed < 0){bspeed = 0;}
       }
 
       if (StdDraw.isKeyPressed(LEFT)){
-         x -= increment;
-         left_momentum += speedFactor;
-      }else {
-         left_momentum -= speedFactor;
-         if (left_momentum < 0){
-            left_momentum = 0;
-         }
+         lspeed += speedFactor / 1.25;
+         rspeed -= speedFactor;
+      }else{
+         lspeed -= speedFactor / 1.5;
+         if (lspeed < 0){lspeed = 0;}
       }
-
-
 
       if (StdDraw.isKeyPressed(RIGHT)){
-         x += increment;
-         right_momentum += speedFactor;
-      }else {
-         right_momentum -= speedFactor;
-         if (right_momentum < 0){
-            right_momentum = 0;
-         }
+         rspeed += speedFactor / 1.25;
+         lspeed -= speedFactor;
+      }else{
+         rspeed -= speedFactor / 1.5;
+         if (rspeed < 0){rspeed = 0;}
       }
 
-      // check if two keys are pressed, prevents unwanted speed gain when moving diagonally
-
-      if (StdDraw.isKeyPressed(UP) && StdDraw.isKeyPressed(RIGHT)){
-         y -= increment / 2;
-         x -= increment / 2;
-      }
-
-      if (StdDraw.isKeyPressed(UP) && StdDraw.isKeyPressed(LEFT)){
-         y -= increment / 2;
-         x += increment / 2;
-      }
-
-      if (StdDraw.isKeyPressed(DOWN) && StdDraw.isKeyPressed(RIGHT)){
-         y += increment / 2;
-         x -= increment / 2;
-      }
-
-
-      if (StdDraw.isKeyPressed(DOWN) && StdDraw.isKeyPressed(LEFT)){
-         y += increment / 2;
-         x += increment / 2;
-      }
-
-
-      y += forward_momentum;
-      y -= backward_momentum;
-      x -= left_momentum;
-      x += right_momentum;
+      y += fspeed;
+      y -= bspeed;
+      x += rspeed;
+      x -= lspeed;
 
 
 

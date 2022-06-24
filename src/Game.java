@@ -30,13 +30,19 @@ public class Game {
 
 
     public void mainGameLoop(){
-        Player p = new Player(false);
+        Player p1 = new Player(false);
         while (true){
             long start = System.currentTimeMillis();
 
             StdDraw.clear();
-            p.draw();
-            p.update();
+            p1.draw();
+            p1.update();
+
+            count++;
+            if (count >= FPS_CAP){count = 0;}
+
+
+
             long end = System.currentTimeMillis();
 
             // frame timing checks
