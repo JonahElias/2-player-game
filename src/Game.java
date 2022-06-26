@@ -7,20 +7,19 @@ public class Game {
     private int count; // keeps track of gameloop
 
 
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new Game();
     }
 
 
-    public Game(){
+    public Game() {
         setup();
         mainGameLoop();
     }
 
-    public void setup(){
+    public void setup() {
         // setup StdDraw
-        StdDraw.setCanvasSize(650, 650);
+        StdDraw.setCanvasSize(700, 700);
         StdDraw.setScale(0, 100);
 
         // initialize game variables
@@ -29,18 +28,20 @@ public class Game {
     }
 
 
-    public void mainGameLoop(){
+    public void mainGameLoop() {
+
         Player p1 = new Player(false);
-        while (true){
+        while (true) {
             long start = System.currentTimeMillis();
 
             StdDraw.clear();
             p1.draw();
-            p1.update();
+            p1.update(count);
 
             count++;
-            if (count >= FPS_CAP){count = 0;}
-
+            if (count >= FPS_CAP) {
+                count = 0;
+            }
 
 
             long end = System.currentTimeMillis();
@@ -52,7 +53,7 @@ public class Game {
                 cpu_time_int = 1000 / FPS_CAP;
             }
             StdDraw.show(cpu_time_int);
-            System.out.println("cpu time: " + cpu_time);
+            //System.out.println("cpu time: " + cpu_time);
         }
     }
 
