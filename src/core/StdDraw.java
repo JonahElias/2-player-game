@@ -1,4 +1,4 @@
-package engine;
+package core;
 
 
 import java.awt.BasicStroke;
@@ -29,8 +29,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DirectColorModel;
-import java.awt.image.WritableRaster;
 
 import java.io.File;
 import java.io.IOException;

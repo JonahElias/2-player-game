@@ -1,4 +1,4 @@
-import engine.StdDraw;
+import core.StdDraw;
 import gameobjects.Player;
 
 public class Game {
@@ -29,14 +29,13 @@ public class Game {
 
 
     public void mainGameLoop() {
-
-        Player p1 = new Player(false);
+        Player p2 = new Player(false);
         while (true) {
             long start = System.currentTimeMillis();
 
             StdDraw.clear();
-            p1.draw();
-            p1.update(count);
+            p2.draw();
+            p2.update();
 
             count++;
             if (count >= FPS_CAP) {
@@ -53,7 +52,7 @@ public class Game {
                 cpu_time_int = 1000 / FPS_CAP;
             }
             StdDraw.show(cpu_time_int);
-            //System.out.println("cpu time: " + cpu_time);
+            System.out.println("cpu time: " + cpu_time);
         }
     }
 

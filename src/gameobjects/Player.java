@@ -1,7 +1,8 @@
 package gameobjects;
 
-import engine.StdAudio;
-import engine.StdDraw;
+import core.StdDraw;
+import gameobjects.weapons.Gun;
+import gameobjects.weapons.Rifle;
 
 public class Player {
 
@@ -13,6 +14,7 @@ public class Player {
     private final double halfHeight;
     private int health;
     private final boolean isPlayerOne;
+    private final Gun gun;
 
     // driving mechanics variables
 
@@ -22,9 +24,6 @@ public class Player {
     private double rspeed;
     private double lspeed;
 
-    // shooting mechanics variables
-
-    private int frames_per_shot = 5;
 
 
     // numbers for key inputs
@@ -42,6 +41,7 @@ public class Player {
         halfHeight = halfWidth * 1.875;
         isPlayerOne = playerOne;
         speedFactor = 0.0125;
+        gun = new Rifle();
 
         if (isPlayerOne) {
             UP = 87; // w
@@ -62,15 +62,25 @@ public class Player {
 
     public void draw() {
         if (isPlayerOne) {
-            StdDraw.picture(x, y, "images/car1.png", halfWidth * 2, halfHeight * 2); // draw car
-            StdDraw.picture(x + halfWidth, y, "images/gun.png", 3, 3 / 7.5); // draw gun
+            StdDraw.picture(x, y, "images/cars/car1.png", halfWidth * 2, halfHeight * 2); // draw car
         } else {
-            StdDraw.picture(x, y, "images/car2.png", halfWidth * 2, halfHeight * 2); // draw car
-            StdDraw.picture(x - halfWidth, y, "images/gun.png", 3, 3 / 7.5, 180); // draw gun
+            StdDraw.picture(x, y, "images/cars/car2.png", halfWidth * 2, halfHeight * 2); // draw car
         }
+        gun.draw(isPlayerOne, x, y, halfWidth); // draw gun
     }
 
-    public void update(int count) {
+    public void update() {
+
+
+        // shooting mechanics
+
+
+        if (StdDraw.isKeyPressed(SHOOT)){
+            gun.shoot();
+        }
+        gun.update();
+
+
 
         // driving mechanics
 
@@ -120,12 +130,9 @@ public class Player {
         x += rspeed;
         x -= lspeed;
 
-        // shooting mechanics
 
-        if (StdDraw.isKeyPressed(SHOOT) && count % frames_per_shot == 0){
-            System.out.println("shot");
-            StdAudio.playInBackground("audio/akdualshot.wav");
-        }
+
+
 
     }
 

@@ -1,4 +1,4 @@
-package engine;
+package core;
 
 import javax.sound.sampled.Clip;
 
@@ -19,9 +19,6 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
-import javax.sound.sampled.LineListener;
-import javax.sound.sampled.LineEvent;
 
 /**
  *  The {@code StdAudio} class provides a basic capability for
