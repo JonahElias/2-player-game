@@ -1,4 +1,4 @@
-package gameobjects.weapons;
+package assets.weapons;
 
 import core.StdAudio;
 import core.StdDraw;
@@ -10,7 +10,7 @@ public class Gun {
     double width; // full width of gun
     double height; // full height of gun
     double fireSize; // size of gunfire drawn
-    int damage; // how much damage the gun deals
+    double damage; // how much damage the gun deals
     int framesPerShot; // how many frames between each shot (speed)
     int shotCount; // how many frames has passed since the last shot
     int framesPerAudio; // how many frames between each gunfire audio

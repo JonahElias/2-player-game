@@ -1,5 +1,5 @@
 import core.StdDraw;
-import gameobjects.Player;
+import assets.Player;
 
 public class Game {
 

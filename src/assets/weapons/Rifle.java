@@ -1,15 +1,15 @@
-package gameobjects.weapons;
+package assets.weapons;
 
 public class Rifle extends Gun {
 
     public Rifle() {
-        width = 3;
-        height = width / 7.5;
-        fireSize = 1.375;
+        width = 2.1;
+        height = width / 6;
+        fireSize = 1.125;
         damage = 0;
         framesPerShot = 5;
         shotCount = 0;
-        framesPerAudio = 6;
+        framesPerAudio = 7;
         audioCount = 0;
         shouldDrawFire = false;
         audio_path = "audio/ak.wav";

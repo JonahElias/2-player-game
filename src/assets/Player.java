@@ -1,8 +1,8 @@
-package gameobjects;
+package assets;
 
 import core.StdDraw;
-import gameobjects.weapons.Gun;
-import gameobjects.weapons.Rifle;
+import assets.weapons.Gun;
+import assets.weapons.Rifle;
 
 public class Player {
 
@@ -18,13 +18,13 @@ public class Player {
 
     // driving mechanics variables
 
-    private final double speedFactor;
-    private double fspeed;
-    private double bspeed;
-    private double rspeed;
-    private double lspeed;
-
-
+    private final double speedFactor; // a standard speed factor to be modified
+    private final double vertAccel; // speed factor for vertical acceleration
+    private final double vertDeccel; // speed factor for vertical deceleration
+    private double fspeed; // forward velocity of car
+    private double bspeed; // backward velocity of car
+    private double rspeed; // velocity of car to the right
+    private double lspeed; // velocity of car to the left
 
     // numbers for key inputs
 
@@ -37,11 +37,16 @@ public class Player {
     public Player(boolean playerOne) {
         x = 50.0;
         y = 50.0;
-        halfWidth = 5.0;
+        halfWidth = 3.5;
         halfHeight = halfWidth * 1.875;
+        health = 100;
         isPlayerOne = playerOne;
-        speedFactor = 0.0125;
         gun = new Rifle();
+
+        speedFactor = 0.0125;
+        vertAccel = speedFactor * 1.25;
+        vertDeccel = speedFactor / 1.125;
+
 
         if (isPlayerOne) {
             UP = 87; // w
@@ -61,12 +66,15 @@ public class Player {
     }
 
     public void draw() {
+        gun.draw(isPlayerOne, x, y, halfWidth); // draw gun
         if (isPlayerOne) {
             StdDraw.picture(x, y, "images/cars/car1.png", halfWidth * 2, halfHeight * 2); // draw car
+            HealthBar.drawHealthBar(true, 15, 90, health);
         } else {
             StdDraw.picture(x, y, "images/cars/car2.png", halfWidth * 2, halfHeight * 2); // draw car
+            HealthBar.drawHealthBar(false, 85, 90, health);
         }
-        gun.draw(isPlayerOne, x, y, halfWidth); // draw gun
+
     }
 
     public void update() {
@@ -85,10 +93,10 @@ public class Player {
         // driving mechanics
 
         if (StdDraw.isKeyPressed(UP)) {
-            fspeed += speedFactor;
-            bspeed -= speedFactor * 2.25;
+            fspeed += vertAccel;
+            bspeed -= vertAccel * 1.5;
         } else {
-            fspeed -= speedFactor * 1.25;
+            fspeed -= vertDeccel;
             if (fspeed < 0) {
                 fspeed = 0;
             }
@@ -96,30 +104,30 @@ public class Player {
 
 
         if (StdDraw.isKeyPressed(DOWN)) {
-            bspeed += speedFactor;
-            fspeed -= speedFactor * 2.25;
+            bspeed += vertAccel;
+            fspeed -= vertAccel * 1.5;
         } else {
-            bspeed -= speedFactor * 1.25;
+            bspeed -= vertDeccel;
             if (bspeed < 0) {
                 bspeed = 0;
             }
         }
 
         if (StdDraw.isKeyPressed(LEFT)) {
-            lspeed += speedFactor / 1.5;
+            lspeed += speedFactor / 2;
             rspeed -= speedFactor;
         } else {
-            lspeed -= speedFactor / 1.5;
+            lspeed -= speedFactor;
             if (lspeed < 0) {
                 lspeed = 0;
             }
         }
 
         if (StdDraw.isKeyPressed(RIGHT)) {
-            rspeed += speedFactor / 1.5;
+            rspeed += speedFactor / 2;
             lspeed -= speedFactor;
         } else {
-            rspeed -= speedFactor / 1.5;
+            rspeed -= speedFactor;
             if (rspeed < 0) {
                 rspeed = 0;
             }
@@ -130,10 +138,28 @@ public class Player {
         x += rspeed;
         x -= lspeed;
 
+        // car boundaries
 
+        if (y + halfHeight > 100){
+            y = 100 - halfHeight;
+            fspeed = 0;
+        }
+        if (y - halfHeight < 0){
+            y = halfHeight;
+            bspeed = 0;
+        }
+        if (x + halfWidth > 100){
+            x = 100 - halfWidth;
+            rspeed = 0;
+        }
+        if (x - halfWidth < 0){
+            x = halfWidth;
+            lspeed = 0;
 
+        }
 
 
     }
+
 
 }
