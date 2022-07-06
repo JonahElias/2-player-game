@@ -1,5 +1,6 @@
+import core.EntityManager;
 import core.StdDraw;
-import assets.Player;
+import entities.Player;
 
 public class Game {
 
@@ -34,8 +35,8 @@ public class Game {
             long start = System.currentTimeMillis();
 
             StdDraw.clear();
-            p2.draw();
-            p2.update();
+            EntityManager.drawEntities();
+            EntityManager.updateEntities();
 
             count++;
             if (count >= FPS_CAP) {
@@ -52,7 +53,6 @@ public class Game {
                 cpu_time_int = 1000 / FPS_CAP;
             }
             StdDraw.show(cpu_time_int);
-            System.out.println("cpu time: " + cpu_time);
         }
     }
 

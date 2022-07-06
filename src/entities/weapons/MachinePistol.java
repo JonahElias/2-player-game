@@ -1,4 +1,4 @@
-package assets.weapons;
+package entities.weapons;
 
 public class MachinePistol extends Gun {
 
@@ -6,7 +6,7 @@ public class MachinePistol extends Gun {
         width = 1.125;
         height = width / 4;
         fireSize = 1;
-        damage = 0;
+        damage = 1;
         framesPerShot = 10;
         shotCount = 0;
         framesPerAudio = 8;

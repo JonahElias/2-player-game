@@ -1,8 +1,8 @@
-package assets;
+package entities;
 
 import core.StdDraw;
-import assets.weapons.Gun;
-import assets.weapons.Rifle;
+import entities.weapons.Gun;
+import entities.weapons.Rifle;
 
 public class Player {
 
@@ -12,7 +12,7 @@ public class Player {
     private double y;
     private final double halfWidth;
     private final double halfHeight;
-    private int health;
+    private double health;
     private final boolean isPlayerOne;
     private final Gun gun;
 
@@ -84,7 +84,7 @@ public class Player {
 
 
         if (StdDraw.isKeyPressed(SHOOT)){
-            gun.shoot();
+            gun.shoot(isPlayerOne);
         }
         gun.update();
 
@@ -160,6 +160,16 @@ public class Player {
 
 
     }
+
+    public double getY() {return y;}
+    public double getHalfHeight(){return halfHeight;}
+
+    public double getHealth(){return health;}
+    public double getGunDamage(){return gun.getDamage();}
+
+
+    public void setHealth(double h){health = h;}
+
 
 
 }

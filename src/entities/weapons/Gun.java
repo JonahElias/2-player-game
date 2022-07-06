@@ -1,5 +1,6 @@
-package assets.weapons;
+package entities.weapons;
 
+import core.EntityManager;
 import core.StdAudio;
 import core.StdDraw;
 
@@ -20,9 +21,9 @@ public class Gun {
     String image_path; // path for gun image
 
 
-    public void shoot() {
+    public void shoot(boolean isPlayerOne) {
         if (framesPerShot - shotCount == 0) {
-            // *code for when gun is shot (goes here)
+            EntityManager.bulletCollision(isPlayerOne);
             shotCount = 0;
         }
         playAudio();
@@ -87,4 +88,6 @@ public class Gun {
             audioCount = 0;
         }
     }
+
+    public double getDamage(){return damage;}
 }
