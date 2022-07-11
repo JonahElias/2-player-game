@@ -1,6 +1,6 @@
 package entities.roadobjects;
 
-import core.StdDraw;
+import tools.StdDraw;
 
 public class Barrier {
 
@@ -11,17 +11,18 @@ public class Barrier {
 
 
     public Barrier(double y){
+        halfWidth = 2;
+        halfHeight = 10;
         x = halfWidth;
         this.y = y;
-        halfWidth = 3;
-        halfHeight = 10;
+
 
     }
 
 
     public void draw(){
-        StdDraw.picture(x, y, "images/roadimages/barrier2.png", halfWidth * 2, halfHeight * 2);
-        StdDraw.picture(100 - x, y, "images/roadimages/barrier2.png", halfWidth * 2, halfHeight * 2);
+        StdDraw.picture(x, y, "images/roadimages/barrier.png", halfWidth * 2, halfHeight * 2);
+        StdDraw.picture(100 - x, y, "images/roadimages/barrier.png", halfWidth * 2, halfHeight * 2);
     }
 
 

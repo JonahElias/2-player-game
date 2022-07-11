@@ -1,6 +1,6 @@
 package entities;
 
-import core.StdDraw;
+import tools.StdDraw;
 import entities.weapons.Gun;
 import entities.weapons.Rifle;
 

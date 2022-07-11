@@ -1,7 +1,7 @@
 package entities.powerups;
 
-import core.StdDraw;
-
+import tools.StdDraw;
+import java.awt.*;
 import java.util.Random;
 
 public abstract class PowerUp {
@@ -11,7 +11,7 @@ public abstract class PowerUp {
     protected double halfWidth = 2;
     protected double halfHeight = 2;
     protected double speed = 1.25;
-    protected int rarity;
+    protected double rarity;
     protected String image_path;
 
 
@@ -20,6 +20,7 @@ public abstract class PowerUp {
     public void draw() {
         StdDraw.picture(x, y, image_path, halfWidth * 2, halfHeight * 2);
         StdDraw.setPenRadius(0.002);
+        StdDraw.setPenColor(Color.black);
         StdDraw.rectangle(x, y, halfWidth, halfHeight);
     }
 
@@ -37,7 +38,7 @@ public abstract class PowerUp {
 
 
         PowerUp powerUp = powerUps[r.nextInt(powerUps.length)];
-        if (r.nextInt(powerUp.rarity * 60) == 0) {
+        if (r.nextInt((int) (powerUp.rarity * 60)) == 0) {
             return powerUp;
 
         }

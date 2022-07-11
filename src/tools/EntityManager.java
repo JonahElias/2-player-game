@@ -1,8 +1,9 @@
-package core;
+package tools;
 
 import entities.Player;
 import entities.powerups.PowerUp;
 import entities.roadobjects.Barrier;
+import entities.roadobjects.Obstacle;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,34 +11,38 @@ import java.util.ArrayList;
 
 public class EntityManager {
 
+
     private static final Player playerOne = new Player(true);
     private static final Player playerTwo = new Player(false);
     private static ArrayList<PowerUp> powerUps = new ArrayList<>();
     private static ArrayList<Barrier> barriers = new ArrayList<>();
+    private static ArrayList<Obstacle> obstacles = new ArrayList<>();
 
 
-    public static void init(){
-        initBarriers();
+    public static void init() {
+        for (int i = 10; i < 100; i += 20) {
+            barriers.add(new Barrier(i));
+        }
         playerOne.setMiddleBoundary(49);
-        playerOne.setSideBoundary(barriers.get(0).getHalfWidth());
+        playerOne.setSideBoundary(barriers.get(0).getHalfWidth() * 2);
         playerTwo.setMiddleBoundary(51);
-        playerTwo.setSideBoundary(100 - barriers.get(0).getHalfWidth());
+        playerTwo.setSideBoundary(100 - barriers.get(0).getHalfWidth() * 2);
     }
-
 
 
     public static void drawEntities() {
         drawLanes();
-        playerOne.draw();
-        playerTwo.draw();
-
-        for (PowerUp p : powerUps){
+        for (PowerUp p : powerUps) {
             p.draw();
         }
-
-        for (Barrier b : barriers){
+        for (Barrier b : barriers) {
             b.draw();
         }
+        for (Obstacle o : obstacles) {
+            o.draw();
+        }
+        playerOne.draw();
+        playerTwo.draw();
 
 
     }
@@ -47,72 +52,59 @@ public class EntityManager {
         playerTwo.update();
         updatePowerUps();
         updateBarriers();
-
-        for (PowerUp p : powerUps){
-            p.update();
-        }
-    }
-
-    private static void updateBarriers(){
-        for (Barrier b : barriers){b.update();}
-        spawnBarrier();
-        removePastBarriers();
+        updateObstacles();
+        System.out.println("powerup size: " + powerUps.size());
+        System.out.println("barrier size: " + barriers.size());
+        System.out.println("obstacle size: " + obstacles.size());
     }
 
 
-    private static void spawnBarrier(){
-        Barrier lastBarrier = barriers.get(barriers.size() - 1);
-        if (lastBarrier.getTopEdge() < 100){
-            barriers.add(new Barrier(lastBarrier.getTopEdge() + lastBarrier.getHalfHeight()));
-        }
-        System.out.println(barriers.size());
+    public static void spawnEntities() {
+        EntityListManager.spawnBarriers(barriers);
+        EntityListManager.spawnPowerUps(powerUps);
+        EntityListManager.spawnObstacle(obstacles);
     }
 
-    private static void removePastBarriers(){
-        for (int i = 0; i < barriers.size(); i++){
-            if (barriers.get(i).getTopEdge() < 0){
-                barriers.remove(barriers.get(i));
-
-            }
-        }
+    public static void removeInvalidEntities() {
+        EntityListManager.removeInvalidBarrier(barriers);
+        EntityListManager.removeInvalidPowerUps(powerUps);
+        EntityListManager.removeInvalidObstacles(obstacles);
     }
 
 
-    private static void initBarriers(){
-        for (int i = 10; i < 100; i += 20){
-            barriers.add(new Barrier(i));
-        }
-    }
-
-
-    private static void drawLanes(){
+    private static void drawLanes() {
         double halfDistance = 1;
         double width = 0.5;
         double height = 50;
         StdDraw.setPenColor(new Color(255, 244, 75));
 
 
-
         StdDraw.filledRectangle(50 - halfDistance, 50, width, height);
         StdDraw.filledRectangle(50 + halfDistance, 50, width, height);
     }
 
+    private static void updateBarriers() {
+        for (Barrier b : barriers) {
+            b.update();
+        }
+    }
 
 
-    private static void updatePowerUps(){
-        spawnPowerUps();
-        for (int i = 0; i < powerUps.size(); i++){
+    private static void updatePowerUps() {
+        for (int i = 0; i < powerUps.size(); i++) {
             PowerUp powerUp = powerUps.get(i);
+            powerUp.update();
+
             double topEdge = powerUp.getY() + powerUp.getHalfHeight();
             double bottomEdge = powerUp.getY() - powerUp.getHalfHeight();
             double leftEdge = powerUp.getX() - powerUp.getHalfWidth();
             double rightEdge = powerUp.getX() + powerUp.getHalfWidth();
 
 
-            if (playerCollision(true, topEdge, bottomEdge, leftEdge, rightEdge)){
+            if (playerCollision(true, topEdge, bottomEdge, leftEdge, rightEdge)) {
                 powerUp.useEffect(true);
                 powerUps.remove(powerUp);
-            }else if (playerCollision(false, topEdge, bottomEdge, leftEdge, rightEdge)){
+            } else if (playerCollision(false, topEdge, bottomEdge, leftEdge, rightEdge)) {
                 powerUp.useEffect(false);
                 powerUps.remove(powerUp);
             }
@@ -120,14 +112,22 @@ public class EntityManager {
     }
 
 
+    private static void updateObstacles() {
+        for (Obstacle o : obstacles) {
+            o.update();
+            if (playerCollision(true, o.getTopEdge(), o.getBottomEdge(), o.getLeftEdge(), o.getRightEdge()) && !o.isHit()) {
+                o.setHit(true);
+                updatePlayerHealth(true, -20);
+            }
 
-    private static void spawnPowerUps(){
-        PowerUp powerUp = PowerUp.spawnPowerUp();
-        if (powerUp != null){
-            powerUps.add(powerUp);
+            if (playerCollision(false, o.getTopEdge(), o.getBottomEdge(), o.getLeftEdge(), o.getRightEdge()) && !o.isHit()) {
+                o.setHit(true);
+                updatePlayerHealth(false, -20);
+            }
+
+
         }
     }
-
 
 
     public static void bulletCollision(boolean isPlayerOne) {
@@ -211,14 +211,18 @@ public class EntityManager {
         return false;
     }
 
-    public static void givePlayerHealthBoost(boolean isPlayerOne, double healthBoost){
-        if (isPlayerOne){
-            playerOne.setHealth(playerOne.getHealth() + healthBoost);
-            if (playerOne.getHealth() > 100){playerOne.setHealth(100);}
-        }
-        else {
-            playerTwo.setHealth(playerTwo.getHealth() + healthBoost);
-            if (playerTwo.getHealth() > 100){playerTwo.setHealth(100);}
+
+    public static void updatePlayerHealth(boolean isPlayerOne, double changeFactor) {
+        if (isPlayerOne) {
+            playerOne.setHealth(playerOne.getHealth() + changeFactor);
+            if (playerOne.getHealth() > 100) {
+                playerOne.setHealth(100);
+            }
+        } else {
+            playerTwo.setHealth(playerTwo.getHealth() + changeFactor);
+            if (playerTwo.getHealth() > 100) {
+                playerTwo.setHealth(100);
+            }
         }
     }
 

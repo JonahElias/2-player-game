@@ -1,8 +1,8 @@
 package entities.weapons;
 
-import core.EntityManager;
-import core.StdAudio;
-import core.StdDraw;
+import tools.EntityManager;
+import tools.StdAudio;
+import tools.StdDraw;
 
 import java.util.Random;
 

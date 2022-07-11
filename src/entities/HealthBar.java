@@ -1,6 +1,6 @@
 package entities;
 
-import core.StdDraw;
+import tools.StdDraw;
 import java.awt.Color;
 
 public class HealthBar {

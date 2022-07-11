@@ -1,22 +1,17 @@
 package entities.powerups;
-import core.EntityManager;
-
-import java.util.Random;
+import tools.EntityManager;
 
 public class TiltDrink extends PowerUp{
 
 
     public TiltDrink(double x){
-        Random r = new Random();
       this.x = x;
-      rarity = 2;
+      rarity = 8;
       image_path = "images/powerups/tilt.png";
-
-
     }
 
     @Override
     public void useEffect(boolean isPlayerOne) {
-        EntityManager.givePlayerHealthBoost(isPlayerOne, 10);
+        EntityManager.updatePlayerHealth(isPlayerOne, 10);
     }
 }

@@ -1,6 +1,5 @@
-import core.EntityManager;
-import core.StdDraw;
-import entities.Player;
+import tools.EntityManager;
+import tools.StdDraw;
 
 public class Game {
 
@@ -38,7 +37,8 @@ public class Game {
             StdDraw.clear();
             EntityManager.drawEntities();
             EntityManager.updateEntities();
-
+            EntityManager.spawnEntities();
+            EntityManager.removeInvalidEntities();
             count++;
             if (count >= FPS_CAP) {
                 count = 0;
