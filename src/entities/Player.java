@@ -25,6 +25,8 @@ public class Player {
     private double bspeed; // backward velocity of car
     private double rspeed; // velocity of car to the right
     private double lspeed; // velocity of car to the left
+    private double middleBoundary;
+    private double sideBoundary;
 
     // numbers for key inputs
 
@@ -35,8 +37,6 @@ public class Player {
     private final int SHOOT;
 
     public Player(boolean playerOne) {
-        x = 50.0;
-        y = 50.0;
         halfWidth = 3.5;
         halfHeight = halfWidth * 1.875;
         health = 100;
@@ -54,12 +54,16 @@ public class Player {
             LEFT = 65; // a
             RIGHT = 68; // d
             SHOOT = 67; // c
+            x = 25;
+            y = 50;
         } else {
             UP = 38; // up arrow
             DOWN = 40; // down arrow
             LEFT = 37; // left arrow
             RIGHT = 39; // right arrow
             SHOOT = 77; // m
+            x = 75;
+            y = 50;
         }
 
 
@@ -83,11 +87,10 @@ public class Player {
         // shooting mechanics
 
 
-        if (StdDraw.isKeyPressed(SHOOT)){
+        if (StdDraw.isKeyPressed(SHOOT)) {
             gun.shoot(isPlayerOne);
         }
         gun.update();
-
 
 
         // driving mechanics
@@ -114,7 +117,7 @@ public class Player {
         }
 
         if (StdDraw.isKeyPressed(LEFT)) {
-            lspeed += speedFactor / 2;
+            lspeed += speedFactor;
             rspeed -= speedFactor;
         } else {
             lspeed -= speedFactor;
@@ -124,7 +127,7 @@ public class Player {
         }
 
         if (StdDraw.isKeyPressed(RIGHT)) {
-            rspeed += speedFactor / 2;
+            rspeed += speedFactor;
             lspeed -= speedFactor;
         } else {
             rspeed -= speedFactor;
@@ -138,38 +141,75 @@ public class Player {
         x += rspeed;
         x -= lspeed;
 
-        // car boundaries
+        // car vertical boundaries
 
-        if (y + halfHeight > 100){
+        if (y + halfHeight > 100) {
             y = 100 - halfHeight;
             fspeed = 0;
         }
-        if (y - halfHeight < 0){
+        if (y - halfHeight < 0) {
             y = halfHeight;
             bspeed = 0;
         }
-        if (x + halfWidth > 100){
-            x = 100 - halfWidth;
+
+        // car horizontal boundaries
+
+        if (isPlayerOne && x + halfWidth > middleBoundary) {
+            x = middleBoundary - halfWidth;
             rspeed = 0;
         }
-        if (x - halfWidth < 0){
-            x = halfWidth;
+        if (!isPlayerOne && x - halfWidth < middleBoundary) {
+            x = middleBoundary + halfWidth;
             lspeed = 0;
-
+        }
+        if (isPlayerOne && x - halfWidth < sideBoundary) {
+            x = sideBoundary + halfWidth;
+            lspeed = 0;
+        }
+        if (!isPlayerOne && x + halfWidth > sideBoundary) {
+            x = sideBoundary - halfWidth;
+            rspeed = 0;
         }
 
 
     }
 
-    public double getY() {return y;}
-    public double getHalfHeight(){return halfHeight;}
+    public double getY() {
+        return y;
+    }
 
-    public double getHealth(){return health;}
-    public double getGunDamage(){return gun.getDamage();}
+    public double getHalfHeight() {
+        return halfHeight;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getHalfWidth() {
+        return halfWidth;
+    }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public double getGunDamage() {
+        return gun.getDamage();
+    }
 
 
-    public void setHealth(double h){health = h;}
+    public void setHealth(double h) {
+        health = h;
+    }
 
+    public void setMiddleBoundary(double middleBoundary) {
+        this.middleBoundary = middleBoundary;
+    }
+
+    public void setSideBoundary(double sideBoundary) {
+        this.sideBoundary = sideBoundary;
+    }
 
 
 }

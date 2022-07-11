@@ -24,13 +24,14 @@ public class Game {
         StdDraw.setScale(0, 100);
 
         // initialize game variables
+        EntityManager.init();
         count = 0;
 
     }
 
 
     public void mainGameLoop() {
-        Player p2 = new Player(false);
+
         while (true) {
             long start = System.currentTimeMillis();
 
