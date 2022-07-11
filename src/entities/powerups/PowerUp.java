@@ -24,12 +24,9 @@ public abstract class PowerUp {
         StdDraw.rectangle(x, y, halfWidth, halfHeight);
     }
 
-    public static PowerUp spawnPowerUp() {
+    public static PowerUp spawnPowerUp(double xCoord) {
         Random r = new Random();
 
-        double xCoord = r.nextDouble() * 100;
-        if (xCoord < 5){xCoord = 5;} // minimum distance from left side is barrier width + powerup width
-        if (xCoord > 95){xCoord = 95;} // minimum distance from right side is 100 - barrier width - powerup width
 
 
 

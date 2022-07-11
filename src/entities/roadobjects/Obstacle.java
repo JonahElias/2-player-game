@@ -47,6 +47,7 @@ public class Obstacle {
     public double getBottomEdge(){
         return y - halfHeight;
     }
+    public double getX(){return x;}
 
     public boolean isHit() {
         return hit;

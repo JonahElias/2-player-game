@@ -101,10 +101,10 @@ public class EntityManager {
             double rightEdge = powerUp.getX() + powerUp.getHalfWidth();
 
 
-            if (playerCollision(true, topEdge, bottomEdge, leftEdge, rightEdge)) {
+            if (playerCollision(playerOne, topEdge, bottomEdge, leftEdge, rightEdge)) {
                 powerUp.useEffect(true);
                 powerUps.remove(powerUp);
-            } else if (playerCollision(false, topEdge, bottomEdge, leftEdge, rightEdge)) {
+            } else if (playerCollision(playerTwo, topEdge, bottomEdge, leftEdge, rightEdge)) {
                 powerUp.useEffect(false);
                 powerUps.remove(powerUp);
             }
@@ -115,14 +115,16 @@ public class EntityManager {
     private static void updateObstacles() {
         for (Obstacle o : obstacles) {
             o.update();
-            if (playerCollision(true, o.getTopEdge(), o.getBottomEdge(), o.getLeftEdge(), o.getRightEdge()) && !o.isHit()) {
+            if (playerCollision(playerOne, o.getTopEdge(), o.getBottomEdge(), o.getLeftEdge(), o.getRightEdge()) && !o.isHit()) {
                 o.setHit(true);
-                updatePlayerHealth(true, -20);
+                o.setRotation(getObstacleAngle(playerOne, o));
+                updatePlayerHealth(true, -12.5);
             }
 
-            if (playerCollision(false, o.getTopEdge(), o.getBottomEdge(), o.getLeftEdge(), o.getRightEdge()) && !o.isHit()) {
+            if (playerCollision(playerTwo, o.getTopEdge(), o.getBottomEdge(), o.getLeftEdge(), o.getRightEdge()) && !o.isHit()) {
                 o.setHit(true);
-                updatePlayerHealth(false, -20);
+                o.setRotation(getObstacleAngle(playerTwo, o));
+                updatePlayerHealth(false, -12.5);
             }
 
 
@@ -185,30 +187,18 @@ public class EntityManager {
     }
 
 
-    private static boolean playerCollision(boolean isPlayerOne, double obj_top, double obj_bottom, double obj_left, double obj_right) {
-        double p_top;
-        double p_bottom;
-        double p_left;
-        double p_right;
+    private static boolean playerCollision(Player player, double obj_top, double obj_bottom, double obj_left, double obj_right) {
+        double p_top = player.getY() + player.getHalfHeight();
+        double p_bottom = player.getY() - player.getHalfHeight();
+        double p_left = player.getX() - player.getHalfWidth();
+        double p_right = player.getX() + player.getHalfWidth();
 
-        if (isPlayerOne) {
-            p_top = playerOne.getY() + playerOne.getHalfHeight();
-            p_bottom = playerOne.getY() - playerOne.getHalfHeight();
-            p_left = playerOne.getX() - playerOne.getHalfWidth();
-            p_right = playerOne.getX() + playerOne.getHalfWidth();
-        } else {
-            p_top = playerTwo.getY() + playerTwo.getHalfHeight();
-            p_bottom = playerTwo.getY() - playerTwo.getHalfHeight();
-            p_left = playerTwo.getX() - playerTwo.getHalfWidth();
-            p_right = playerTwo.getX() + playerTwo.getHalfWidth();
-        }
+        return p_top >= obj_bottom && p_left <= obj_right && p_right >= obj_left && p_bottom <= obj_top;
+    }
 
-
-        if (p_top >= obj_bottom && p_left <= obj_right && p_right >= obj_left && p_bottom <= obj_top) {
-            return true;
-        }
-
-        return false;
+    private static double getObstacleAngle(Player player, Obstacle obstacle){
+        if (player.getX() + player.getHalfWidth() < obstacle.getX()){return 340;}
+        return 20;
     }
 
 

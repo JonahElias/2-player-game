@@ -8,6 +8,14 @@ import java.util.Random;
 
 public class EntityListManager {
 
+    // boundaries
+
+    private static final double leftBarrierBound = 4;
+    private static final double rightBarrierBound = 96;
+    private static final double rightLaneBound = 51;
+    private static final double leftLaneBound = 41;
+    private static final Random r = new Random();
+
 
     public static void spawnBarriers(ArrayList<Barrier> barriers){
         Barrier lastBarrier = barriers.get(barriers.size() - 1);
@@ -18,17 +26,28 @@ public class EntityListManager {
     }
 
     public static void spawnPowerUps(ArrayList<PowerUp> powerUps){
-        PowerUp powerUp = PowerUp.spawnPowerUp();
+        double xCoord = r.nextDouble() * 100;
+
+        if (xCoord < leftBarrierBound + 2){xCoord = leftBarrierBound + 2;} // minimum distance from left side is barrier width + powerup width
+        if (xCoord > rightBarrierBound - 2){xCoord = 98;} // minimum distance from right side is 100 - barrier width - powerup width
+
+
+        PowerUp powerUp = PowerUp.spawnPowerUp(xCoord);
         if (powerUp != null){
             powerUps.add(powerUp);
         }
     }
 
     public static void spawnObstacle(ArrayList<Obstacle> obstacles){
-        Random r = new Random();
-        double shouldSpawn = r.nextInt(6 * 60);
+        double shouldSpawn = r.nextInt(3 * 60);
         if (shouldSpawn == 0){
             double xCoord = r.nextDouble() * 100;
+            if (xCoord < leftBarrierBound + 5){xCoord = leftBarrierBound + 5;}
+            if (xCoord > rightBarrierBound - 5){xCoord = rightBarrierBound - 5;}
+            if (xCoord + 5 > leftLaneBound && xCoord + 5 < rightLaneBound){xCoord = leftLaneBound - 5;}
+            if (xCoord - 5 < rightLaneBound && xCoord - 5 > leftLaneBound){xCoord = rightLaneBound + 5;}
+
+
             obstacles.add(new Obstacle(xCoord));
         }
     }
