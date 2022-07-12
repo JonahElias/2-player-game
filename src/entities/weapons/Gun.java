@@ -20,10 +20,14 @@ public class Gun {
     int roundsInStorage;
     int clipSize;
     int roundsInClip;
+    int framesPerReload;
+    int reloadCount;
+    boolean reloading;
     boolean shouldDrawFire; // if gunfire should be drawn
     String audio_path; // path for gunfire audio
     String image_path; // path for gun image
     Font displayAmmo = new Font("SansSerif", Font.BOLD, 17);
+    Font displayText = new Font("SansSerif", Font.BOLD, 12);
 
 
     public void shoot(boolean isPlayerOne) {
@@ -66,6 +70,7 @@ public class Gun {
         if (audioCount != framesPerAudio) {
             audioCount++;
         }
+
         checkReload(); // checks if gun needs to be reloaded
     }
 
@@ -98,19 +103,31 @@ public class Gun {
         StdDraw.setPenColor(StdDraw.WHITE);
         StdDraw.text(xCoord, 90, Integer.toString(roundsInStorage));
         StdDraw.text(xCoord, 87.5, Integer.toString(roundsInClip));
+        if (reloading && roundsInStorage > 0){
+            StdDraw.setPenColor(StdDraw.BOOK_RED);
+            StdDraw.setFont(displayText);
+            StdDraw.text(xCoord, 85, "RELOADING");
+        }
+
+
     }
 
     private void checkReload(){
         if (roundsInClip == 0){
-            if (roundsInStorage > clipSize){
+            reloadCount++;
+            if (roundsInStorage > clipSize  && reloadCount == framesPerReload){
                 roundsInClip += clipSize;
                 roundsInStorage -= clipSize;
-            }else{
+                reloadCount = 0;
+            }
+            if (roundsInStorage <= clipSize && reloadCount == framesPerReload){
                 roundsInClip = roundsInStorage;
                 roundsInStorage = 0;
-
+                reloadCount = 0;
             }
-
+            reloading = true;
+        }else {
+            reloading = false;
         }
     }
 

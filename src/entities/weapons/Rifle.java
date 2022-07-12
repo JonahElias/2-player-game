@@ -11,9 +11,11 @@ public class Rifle extends Gun {
         shotCount = 0;
         framesPerAudio = 7;
         audioCount = 0;
-        roundsInStorage = 50;
+        roundsInStorage = 60;
         clipSize = 25;
         roundsInClip = clipSize;
+        framesPerReload = 90;
+        reloadCount = 0;
         shouldDrawFire = false;
         audio_path = "audio/ak.wav";
         image_path = "images/weapons/rifle.png";
