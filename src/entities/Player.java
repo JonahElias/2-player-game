@@ -1,5 +1,6 @@
 package entities;
 
+import entities.weapons.MachinePistol;
 import tools.StdDraw;
 import entities.weapons.Gun;
 import entities.weapons.Rifle;
@@ -73,10 +74,10 @@ public class Player {
         gun.draw(isPlayerOne, x, y, halfWidth); // draw gun
         if (isPlayerOne) {
             StdDraw.picture(x, y, "images/cars/car1.png", halfWidth * 2, halfHeight * 2); // draw car
-            HealthBar.drawHealthBar(true, 15, 90, health);
+            HealthBar.drawHealthBar(true, 15, 95, health);
         } else {
             StdDraw.picture(x, y, "images/cars/car2.png", halfWidth * 2, halfHeight * 2); // draw car
-            HealthBar.drawHealthBar(false, 85, 90, health);
+            HealthBar.drawHealthBar(false, 85, 95, health);
         }
 
     }
@@ -211,5 +212,10 @@ public class Player {
         this.sideBoundary = sideBoundary;
     }
 
+    public Gun getGun(){return gun;}
+
+    public int getGunClipSize(){
+        return gun.getClipSize();
+    }
 
 }

@@ -11,6 +11,9 @@ public class MachinePistol extends Gun {
         shotCount = 0;
         framesPerAudio = 8;
         audioCount = 0;
+        roundsInStorage = 30;
+        clipSize = 12;
+        roundsInClip = clipSize;
         shouldDrawFire = false;
         audio_path = "audio/pistol.wav";
         image_path = "images/weapons/machinepistol.png";

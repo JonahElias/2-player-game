@@ -53,9 +53,9 @@ public class EntityManager {
         updatePowerUps();
         updateBarriers();
         updateObstacles();
-        System.out.println("powerup size: " + powerUps.size());
+        /* System.out.println("powerup size: " + powerUps.size());
         System.out.println("barrier size: " + barriers.size());
-        System.out.println("obstacle size: " + obstacles.size());
+        System.out.println("obstacle size: " + obstacles.size());*/
     }
 
 
@@ -213,6 +213,14 @@ public class EntityManager {
             if (playerTwo.getHealth() > 100) {
                 playerTwo.setHealth(100);
             }
+        }
+    }
+
+    public static void updatePlayerAmmo(boolean isPlayerOne){
+        if (isPlayerOne){
+            playerOne.getGun().addAmmo(playerOne.getGunClipSize());
+        }else{
+            playerTwo.getGun().addAmmo(playerTwo.getGunClipSize());
         }
     }
 

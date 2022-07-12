@@ -12,8 +12,8 @@ public class EntityListManager {
 
     private static final double leftBarrierBound = 4;
     private static final double rightBarrierBound = 96;
-    private static final double rightLaneBound = 51;
-    private static final double leftLaneBound = 41;
+    private static final double rightLaneBound = 51.5;
+    private static final double leftLaneBound = 48.5;
     private static final Random r = new Random();
 
 
@@ -27,9 +27,8 @@ public class EntityListManager {
 
     public static void spawnPowerUps(ArrayList<PowerUp> powerUps){
         double xCoord = r.nextDouble() * 100;
-
-        if (xCoord < leftBarrierBound + 2){xCoord = leftBarrierBound + 2;} // minimum distance from left side is barrier width + powerup width
-        if (xCoord > rightBarrierBound - 2){xCoord = 98;} // minimum distance from right side is 100 - barrier width - powerup width
+        if (xCoord - 2 < leftBarrierBound){xCoord = leftBarrierBound + 2;} // minimum distance from left side is barrier width + powerup width
+        if (xCoord + 2 > rightBarrierBound){xCoord = rightBarrierBound - 2;} // minimum distance from right side is 100 - barrier width - powerup width
 
 
         PowerUp powerUp = PowerUp.spawnPowerUp(xCoord);

@@ -6,7 +6,7 @@ public class TiltDrink extends PowerUp{
 
     public TiltDrink(double x){
       this.x = x;
-      rarity = 8;
+      rarity = 7;
       image_path = "images/powerups/tilt.png";
     }
 

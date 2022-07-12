@@ -30,8 +30,9 @@ public abstract class PowerUp {
 
 
 
-        PowerUp[] powerUps = new PowerUp[1];
+        PowerUp[] powerUps = new PowerUp[2];
         powerUps[0] = new TiltDrink(xCoord);
+        powerUps[1] = new Ammo(xCoord);
 
 
         PowerUp powerUp = powerUps[r.nextInt(powerUps.length)];
