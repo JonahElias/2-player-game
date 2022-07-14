@@ -165,10 +165,12 @@ public class Player {
         }
         if (isPlayerOne && x - halfWidth < sideBoundary) {
             x = sideBoundary + halfWidth;
+            health -= lspeed * 5;
             lspeed = 0;
         }
         if (!isPlayerOne && x + halfWidth > sideBoundary) {
             x = sideBoundary - halfWidth;
+            health -= rspeed * 5;
             rspeed = 0;
         }
 
@@ -217,5 +219,9 @@ public class Player {
     public int getGunClipSize(){
         return gun.getClipSize();
     }
+
+    public void multiplyFspeed(double amount){fspeed *= amount;}
+
+    public void addToBspeed(double amount){bspeed += amount;}
 
 }

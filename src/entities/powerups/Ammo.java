@@ -6,7 +6,7 @@ public class Ammo extends PowerUp{
 
     public Ammo(double x){
         this.x = x;
-        rarity = 3;
+        rarity = 2;
         image_path = "images/powerups/ammo.png";
     }
 

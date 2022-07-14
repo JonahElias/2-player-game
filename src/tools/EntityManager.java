@@ -119,12 +119,16 @@ public class EntityManager {
                 o.setHit(true);
                 o.setRotation(getObstacleAngle(playerOne, o));
                 updatePlayerHealth(true, -12.5);
+                playerOne.multiplyFspeed(0.1);
+                playerOne.addToBspeed(0.35);
             }
 
             if (playerCollision(playerTwo, o.getTopEdge(), o.getBottomEdge(), o.getLeftEdge(), o.getRightEdge()) && !o.isHit()) {
                 o.setHit(true);
                 o.setRotation(getObstacleAngle(playerTwo, o));
                 updatePlayerHealth(false, -12.5);
+                playerTwo.multiplyFspeed(0.1);
+                playerTwo.addToBspeed(0.35);
             }
 
 

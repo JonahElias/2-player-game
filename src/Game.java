@@ -1,30 +1,37 @@
+import com.sun.tools.javac.Main;
+import menus.MainMenu;
 import tools.EntityManager;
 import tools.StdDraw;
 
 public class Game {
 
+    /*
+    TODO:
+        add sound for car
+        change sound for machine pistol
+        add menus
+        make distance affect damage
+     */
+
     private final int FPS_CAP = 60; // max FPS
-    private int count; // keeps track of gameloop
 
 
     public static void main(String[] args) {
+        setup();
+        MainMenu.run();
         new Game();
     }
 
 
     public Game() {
-        setup();
         mainGameLoop();
     }
 
-    public void setup() {
+    public static void setup() {
         // setup StdDraw
         StdDraw.setCanvasSize(700, 700);
         StdDraw.setScale(0, 100);
-
-        // initialize game variables
         EntityManager.init();
-        count = 0;
 
     }
 
@@ -39,10 +46,7 @@ public class Game {
             EntityManager.updateEntities();
             EntityManager.spawnEntities();
             EntityManager.removeInvalidEntities();
-            count++;
-            if (count >= FPS_CAP) {
-                count = 0;
-            }
+
 
 
             long end = System.currentTimeMillis();

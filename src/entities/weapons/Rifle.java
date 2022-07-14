@@ -11,7 +11,7 @@ public class Rifle extends Gun {
         shotCount = 0;
         framesPerAudio = 7;
         audioCount = 0;
-        roundsInStorage = 60;
+        roundsInStorage = 70;
         clipSize = 25;
         roundsInClip = clipSize;
         framesPerReload = 90;
