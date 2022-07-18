@@ -19,6 +19,9 @@ public class HowToPlay {
 
     static Color powerupsPanel = new Color(22, 0, 40);
 
+    static Color obstaclePanel = new Color(64, 0, 0);
+    static Color gameplayPanel = new Color(0, 45, 36);
+
 
     public static void run(){
         Button back = new Button(7, 3, 6, 2, "back");
@@ -28,18 +31,14 @@ public class HowToPlay {
 
         while (!back.clicked()){
             StdDraw.clear();
-            back.draw();
+
             drawControls();
             drawPowerUps();
-            System.out.println("Mouse X: " + StdDraw.mouseX());
-            System.out.println("Mouse y: " + StdDraw.mouseY());
+            drawGamplay();
+            back.draw();
 
             StdDraw.show(1000 / 60);
         }
-
-
-
-
 
     }
 
@@ -63,11 +62,6 @@ public class HowToPlay {
         StdDraw.text(15, 72, "Shooting: C");
         StdDraw.text(15, 60, "Movement: Arrow Keys");
         StdDraw.text(15, 57, "Shooting: M");
-
-
-
-
-
     }
 
     private static void drawPowerUps(){
@@ -92,9 +86,29 @@ public class HowToPlay {
         StdDraw.text(50, 55, "Restores Health");
         StdDraw.text(82.5, 55, "Restores Ammo");
 
+    }
+
+    private static void drawGamplay(){
+        StdDraw.setPenColor(obstaclePanel);
+        StdDraw.filledRectangle(67, 25, 67 - 32.5, 25);
+
+        StdDraw.setPenColor(gameplayPanel);
+        StdDraw.filledRectangle(15, 25, 17.5, 25);
 
 
+        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.setFont(titleFont);
+        StdDraw.text(67, 40, "Obstacles");
+        StdDraw.text(15, 45, "Gameplay");
 
+        StdDraw.picture(67, 25, "images/roadimages/obstacle.png", 15, 15);
+
+        StdDraw.setFont(defaultFont);
+        StdDraw.text(67, 13, "Crashing into obstacles lowers health");
+        StdDraw.text(67, 10, "and slows you down");
+        StdDraw.text(15, 40, "- Shoot the other player");
+        StdDraw.text(15, 37, "- Avoid obstacles");
+        StdDraw.text(15, 34, "- Collect powerups");
 
 
     }

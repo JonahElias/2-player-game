@@ -4,6 +4,7 @@ import entities.Player;
 import entities.powerups.PowerUp;
 import entities.roadobjects.Barrier;
 import entities.roadobjects.Obstacle;
+import entities.weapons.Gun;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,17 +13,22 @@ import java.util.ArrayList;
 public class EntityManager {
 
 
-    private static final Player playerOne = new Player(true);
-    private static final Player playerTwo = new Player(false);
+    private static Player playerOne;
+    private static Player playerTwo;
     private static ArrayList<PowerUp> powerUps = new ArrayList<>();
     private static ArrayList<Barrier> barriers = new ArrayList<>();
     private static ArrayList<Obstacle> obstacles = new ArrayList<>();
 
 
-    public static void init() {
+    public static void init(Gun gunOne, Gun gunTwo) {
         for (int i = 10; i < 100; i += 20) {
             barriers.add(new Barrier(i));
         }
+
+
+
+        playerOne = new Player(true, gunOne);
+        playerTwo = new Player(false, gunTwo);
         playerOne.setMiddleBoundary(49);
         playerOne.setSideBoundary(barriers.get(0).getHalfWidth() * 2);
         playerTwo.setMiddleBoundary(51);

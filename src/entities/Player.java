@@ -37,12 +37,12 @@ public class Player {
     private final int RIGHT;
     private final int SHOOT;
 
-    public Player(boolean playerOne) {
+    public Player(boolean playerOne, Gun gun) {
         halfWidth = 3.5;
         halfHeight = halfWidth * 1.875;
         health = 100;
         isPlayerOne = playerOne;
-        gun = new Rifle();
+        this.gun = gun;
 
         speedFactor = 0.0125;
         vertAccel = speedFactor * 1.25;

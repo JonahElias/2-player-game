@@ -53,6 +53,10 @@ public class Button {
         }
     }
 
+    public void drawPicture(String path, double w, double h){
+        StdDraw.picture(x, y, path, w, h);
+    }
+
     public void setFont(Font f){font = f;}
 
     public void setBackgroundColor(Color c){background = c;}

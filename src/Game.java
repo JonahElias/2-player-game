@@ -1,4 +1,6 @@
-import com.sun.tools.javac.Main;
+import entities.weapons.Gun;
+import entities.weapons.MachinePistol;
+import entities.weapons.Rifle;
 import menus.MainMenu;
 import tools.EntityManager;
 import tools.StdDraw;
@@ -9,7 +11,7 @@ public class Game {
     TODO:
         add sound for car
         change sound for machine pistol
-        add menus
+        finalize menus
         make distance affect damage
      */
 
@@ -18,12 +20,14 @@ public class Game {
 
     public static void main(String[] args) {
         setup();
-        MainMenu.run();
-        new Game();
+        String weapon = MainMenu.run();
+        if (weapon.equals("rifle")){new Game(new Rifle(), new Rifle());}
+        else{new Game(new MachinePistol(), new MachinePistol());}
     }
 
 
-    public Game() {
+    public Game(Gun gunOne, Gun gunTwo) {
+        EntityManager.init(gunOne, gunTwo);
         mainGameLoop();
     }
 
@@ -31,7 +35,7 @@ public class Game {
         // setup StdDraw
         StdDraw.setCanvasSize(700, 700);
         StdDraw.setScale(0, 100);
-        EntityManager.init();
+
 
     }
 

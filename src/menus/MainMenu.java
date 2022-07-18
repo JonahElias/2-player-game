@@ -16,8 +16,8 @@ public class MainMenu {
 
 
 
-    public static void run(){
-        Button startGame = new Button(50, 45, 6.5, 3, "Start Game");
+    public static String run(){
+        Button startGame = new Button(50, 45, 6.5, 3, "Play");
         startGame.setBackgroundColor(startGameColor);
         startGame.setHoverColor(startGamehoverColor);
         startGame.setFont(startGameFont);
@@ -37,11 +37,12 @@ public class MainMenu {
 
             StdDraw.setFont(cc);
             StdDraw.text(50, 2, "© 2022 JElias. All rights reserved.");
-
+            drawCars();
 
 
             startGame.draw();
             howToPlay.draw();
+
 
             if (howToPlay.clicked()){
                 HowToPlay.run();
@@ -51,6 +52,15 @@ public class MainMenu {
 
             StdDraw.show(1000 / 60);
         }
+        return WeaponSelect.run();
+    }
+
+
+    private static void drawCars(){
+        double width = 15;
+        double height = width * 1.41;
+        StdDraw.picture(20, 70, "images/cars/titlecar1.png", width, height);
+        StdDraw.picture(82.5, 75, "images/cars/titlecar2.png", width - 1, height);
     }
 
 
