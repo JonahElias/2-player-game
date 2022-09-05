@@ -15,11 +15,11 @@ public class WeaponSelect {
     public static String run(){
         Button back = new Button(7, 3, 6, 2, "back");
 
-        Button rifle = new Button(40, 50, 6, 6, "");
+        Button rifle = new Button(30, 50, 6, 6, "");
         rifle.setBackgroundColor(buttonColor);
         rifle.setHoverColor(buttonHoverColor);
 
-        Button machinepistol = new Button(60, 50, 6, 6, "");
+        Button machinepistol = new Button(70, 50, 6, 6, "");
         machinepistol.setBackgroundColor(buttonColor);
         machinepistol.setHoverColor(buttonHoverColor);
 

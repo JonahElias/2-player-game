@@ -235,4 +235,10 @@ public class EntityManager {
     }
 
 
+    public static double getPlayerHealth(boolean isPlayerOne){
+        if (isPlayerOne){return playerOne.getHealth();}
+        else{return playerTwo.getHealth();}
+    }
+
+
 }
